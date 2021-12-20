@@ -1,5 +1,5 @@
 # Scaled_Metric_Depth_Estimation_ROS
-A ROS node for generating scaled metric depth estimation using MiDaS from https://github.com/isl-org/MiDaS/tree/master/ros and to generate point cloud of the estimated metric depth point cloud. 
+A ROS node for generating scaled metric depth estimation using MiDaS from https://github.com/isl-org/MiDaS and to generate point cloud of the estimated metric depth point cloud. 
 
 To use it PyTorch +1.7 should be there with CUDA +11.0, PyTorch should be installed in this way:
 ~~~
