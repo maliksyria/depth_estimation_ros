@@ -1,5 +1,5 @@
-# depth_estimation_ros
-A ROS node for generating scaled metric depth estimation using MiDaS from https://github.com/isl-org/MiDaS/tree/master/ros and to generate point cloud of the estimated map. 
+# Scaled_Metric_Depth_Estimation_ROS
+A ROS node for generating scaled metric depth estimation using MiDaS from https://github.com/isl-org/MiDaS/tree/master/ros and to generate point cloud of the estimated metric depth point cloud. 
 
 To use it PyTorch +1.7 should be there with CUDA +11.0, PyTorch should be installed in this way:
 ~~~
@@ -8,7 +8,7 @@ wget https://download.pytorch.org/libtorch/cu110/libtorch-cxx11-abi-shared-with-
 unzip libtorch-cxx11-abi-shared-with-deps-1.7.0+cu110.zip
 ~~~
 
-Now from your ROS workspace:
+Now from ROS workspace:
 ~~~
 https://github.com/maliksyria/depth_estimation_ros.git
 ~~~
@@ -21,14 +21,15 @@ Followed by:
 ~~~
 catkin_make
 ~~~ 
-Don't forget to source you devel.bash file of your ROS workspace 
-A pre-trained traced model should be there in your cached ROS directory which can be done by:
+Don't forget to source devel.bash file of ROS workspace.
+
+A pre-trained traced model should be in cached ROS directory which can be done by:
 
 ~~~
 cd ~/.ros
 wget https://github.com/intel-isl/MiDaS/releases/download/v2_1/model-small-traced.pt
 ~~~
-To run the node:
+# Run
 ~~~
 roslaunch midas_cpp midas_cpp.launch input_topic:="/input/image" gt_topic:="/ground_truth_depth" camera_info_in:="/image/camera_info"
 ~~~
