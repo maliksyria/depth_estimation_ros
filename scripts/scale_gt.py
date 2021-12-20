@@ -17,7 +17,9 @@ class ToScale(object):
         self.image_depth = None
         self.zed = False
         self.image_depth_gt = None
-        self.image_sparse = np.zeros((720, 1280)).astype(np.float32)
+        self.h = 720
+        self.w = 1280
+        self.image_sparse = np.zeros((self.h, self.w)).astype(np.float32)
         self.image_depth_scaled = None
         self.points = []
         self.pose = ()
@@ -107,7 +109,7 @@ class ToScale(object):
         prediction_aligned = scale.view(-1, 1, 1) * prediction + shift.view(-1, 1, 1)
         prediction_aligned[prediction_aligned < 0] = 0
         prediciton_depth = 1 / prediction_aligned
-        prediciton_depth_mat = np.asarray(prediciton_depth, dtype=np.float32).reshape((720, 1280))
+        prediciton_depth_mat = np.asarray(prediciton_depth, dtype=np.float32).reshape((self.h, self.w))
         prediciton_depth_mat = np.asarray(prediciton_depth_mat,dtype=np.uint16)
         self.image_depth_scaled = prediciton_depth_mat
         #rospy.loginfo("Finishing scaling process")
