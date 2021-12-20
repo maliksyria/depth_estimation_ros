@@ -9,7 +9,7 @@
         <!-- Input: Camera calibration and metadata.  (sensor_msgs/CameraInfo) -->
         <remap from="rgb/camera_info" to="/camera_info2"/>
 
-        <!-- Input: Rectified color image. (sensor_msgs/Image) -->
+        <!-- Input:Rectified color image. (sensor_msgs/Image) -->
         <remap from="rgb/image_rect_color" to="/vslam_stereo_inertial/KF_DebugImage"/>
 
         <!-- Input: Rectified depth image, registered to the RGB camera. (sensor_msgs/Image) -->
