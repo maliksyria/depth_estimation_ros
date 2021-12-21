@@ -31,5 +31,5 @@ wget https://github.com/intel-isl/MiDaS/releases/download/v2_1/model-small-trace
 ~~~
 # Run
 ~~~
-roslaunch midas_cpp midas_cpp.launch input_topic:="/input/image" gt_topic:="/ground_truth_depth" camera_info_in:="/image/camera_info"
+roslaunch midas_cpp midas_cpp_xyzrgb.launch input_topic:="/input/image" gt_topic:="/ground_truth_depth" camera_info_in:="/image/camera_info"
 ~~~
