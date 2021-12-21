@@ -49,7 +49,7 @@ class ToScale(object):
         self.sub_info = message_filters.Subscriber(self.camera_info_in, CameraInfo)
 
         rospy.loginfo("starting to handel")
-        self.ts = message_filters.ApproximateTimeSynchronizer([self.sub_depth, self.sub_depth_gr, self.sub_info], 10, 0.01, allow_headerless=True)
+        self.ts = message_filters.ApproximateTimeSynchronizer([self.sub_depth, self.sub_depth_gr, self.sub_info], 10, 0.15, allow_headerless=True)
         self.ts.registerCallback(self.image_cb)
         rospy.loginfo("handeled")
         self.idx=0
