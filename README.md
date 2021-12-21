@@ -14,7 +14,7 @@ https://github.com/maliksyria/depth_estimation_ros.git
 ~~~
 Then :
 ~~~
-chmod +x src/midas_cpp/scripts/*.py
+chmod +x src/depth_estimation_ros/scripts/*.py
 ~~~
 
 Followed by:
