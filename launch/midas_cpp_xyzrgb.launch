@@ -40,7 +40,7 @@
 
     </node>
     
-    <node pkg="midas_cpp" type="scale_gt.py" name="scale_gt" output="log" respawn="true">
+    <node pkg="midas_cpp" type="scale_gt_nobridge.py" name="scale_gt" output="log" respawn="true">
         <param name="midas_topic" value="$(arg midas_topic)"/>
         <param name="gt_topic" value="$(arg gt_topic)"/>
         <param name="output_topic" value="$(arg output_topic)"/>

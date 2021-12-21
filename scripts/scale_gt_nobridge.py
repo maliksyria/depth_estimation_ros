@@ -1,16 +1,14 @@
 #!/usr/bin/env python3
 import sys
 import rospy
-from cv_bridge import CvBridge
+import ros_numpy
 from std_msgs.msg import Header
 from sensor_msgs.msg import PointCloud, CameraInfo, Image
-import cv2
 import numpy as np
 import torch
 import message_filters
 class ToScale(object):
     def __init__(self, topic_ori_depth, topic_ground_truth,topic_scaled_depth):
-        self.cv_bridge = CvBridge()
         self.image_depth = None
         self.zed = False
         self.image_depth_gt = None
@@ -56,7 +54,8 @@ class ToScale(object):
 
     def publish(self,scaled_depth,frame_id,stamp_now):
         #header.stamp = rospy.Time.now()
-        img_msg = self.cv_bridge.cv2_to_imgmsg(scaled_depth, encoding="16UC1")
+        #img_msg = self.cv_bridge.cv2_to_imgmsg(scaled_depth, encoding="16UC1")
+        img_msg = ros_numpy.msgify(Image,scaled_depth,encoding='16UC1')
         img_msg.header.frame_id = frame_id
         img_msg.header.stamp = stamp_now
         #img_msg.header.stamp = rospy.Time.now()
@@ -123,10 +122,13 @@ class ToScale(object):
             rospy.loginfo("GOT CAMERA INFO")
             print(self.camera_info_msg)
             self.info = False
-        self.image_depth = self.cv_bridge.imgmsg_to_cv2(msg1)
+        #self.image_depth = self.cv_bridge.imgmsg_to_cv2(msg1)
+        self.image_depth = ros_numpy.numpify(msg1)
         self.frame= msg1.header.frame_id
         self.stamp= msg1.header.stamp
-        self.image_depth_gt = self.cv_bridge.imgmsg_to_cv2(msg2)
+        #self.image_depth_gt = self.cv_bridge.imgmsg_to_cv2(msg2)
+        self.image_depth_gt = ros_numpy.numpify(msg2)
+
         if self.zed:
             self.image_depth_gt = self.image_depth_gt * 1000.
             self.image_depth_gt[np.isnan(self.image_depth_gt)] = 0
