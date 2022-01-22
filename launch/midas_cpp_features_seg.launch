@@ -7,6 +7,8 @@
     <arg name="camera_info_in" default="camera_info_in"/>
     <arg name="camera_info_out" default="camera_out"/>
     <arg name="image_output_topic" default="image_out"/>
+    <arg name="segmentation_topic" default="segmented"/>
+    <arg name="image_input_original_topic" default="/zed2/zed_node/left/image_rect_color"/>
     <arg name="model_name" default="model-small-traced.pt"/>
     <arg name="out_orig_size" default="true"/>
     <arg name="net_width" default="256"/>
@@ -54,6 +56,12 @@
         <param name="image_output_topic" value="$(arg image_output_topic)"/>
     </node>
 
+        <node pkg="midas_cpp" type="segmentation.py" name="segmentation" output="log" respawn="true">
+        <param name="input_topic" value="$(arg input_topic)"/>
+        <param name="image_input_original_topic" value="$(arg image_input_original_topic)"/>
+        <param name="segmentation_topic" value="$(arg segmentation_topic)"/>
+    </node>
+
     <node pkg="tf2_ros" type="static_transform_publisher" name="map_world"
           args="0. 0. 0.  0. 0.0 -0.0 map world" />
     <node pkg="tf2_ros" type="static_transform_publisher" name="zed2_left_camera_optical_frame_zed2_left_camera_optical_frame2_broadcaster"
@@ -72,7 +80,7 @@
       <!--   args="0 0 0 0 0 0 world Left_frame" /> -->
 
   
-    <node type="rviz" name="rviz" pkg="rviz" args="-d $(find midas_cpp)/rviz/orb_slam3_depth.rviz"/>
+    <node type="rviz" name="rviz" pkg="rviz" args="-d $(find midas_cpp)/rviz/orb_slam3_depth_seg.rviz"/>
 <!--     <node pkg="tf2_ros" type="static_transform_publisher" name="world_map_broadcaster" -->
 <!--         args="0. 0. 0.        0. 0. 0. 1.       world map"/> -->
     

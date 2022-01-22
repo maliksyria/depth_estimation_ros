@@ -13,14 +13,14 @@ import torch
 import message_filters
 class ToScale(object):
     def __init__(self, topic_ori_depth, topic_point_cloud,topic_odometry ,topic_scaled_depth):
-        self.fx_real = 645.375183
-        self.cx_real = 631.121765
-        self.fy_real = 645.375183
-        self.cy_real = 361.513153
-        #self.fx_zed = 531.682373
-        #self.cx_zed = 639.885132
-        #self.fy_zed = 531.682373
-        #self.cy_zed = 356.164581
+        #self.fx_real = 645.375183
+        #self.cx_real = 631.121765
+        #self.fy_real = 645.375183
+        #self.cy_real = 361.513153
+        self.fx_zed = 531.682373
+        self.cx_zed = 639.885132
+        self.fy_zed = 531.682373
+        self.cy_zed = 356.164581
         #self.fx_zed = 262.316223145
         #self.cx_zed = 318.740905762
         #self.fy_zed = 262.316223145
@@ -181,8 +181,8 @@ class ToScale(object):
             X = array.item(0)
             Y = array.item(1)
             Z = array.item(2)
-            u=int(((self.fx_real*X)/Z)+self.cx_real)
-            v=int(((self.fy_real*Y)/Z)+self.cy_real)
+            u=int(((self.fx_zed*X)/Z)+self.cx_zed)
+            v=int(((self.fy_zed*Y)/Z)+self.cy_zed)
 
             self.sparses.append([Z,u,v])
 
