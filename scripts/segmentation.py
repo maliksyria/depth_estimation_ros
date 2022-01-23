@@ -24,7 +24,8 @@ class Segmenter(object):
         self.width=1280
         self.height=720
         self.kernel=cv2.getStructuringElement(cv2.MORPH_RECT, (9, 9))
-
+        self.frame = None
+        self.stamp = None
         self.pub = rospy.Publisher(topic_out, Image, queue_size=1)
 
         #self.sub = rospy.Subscriber(topic_in, Image, self.image_rec, queue_size=1)
@@ -36,9 +37,12 @@ class Segmenter(object):
         self.ts.registerCallback(self.image_rec)
 
         self.idx=0
-    def publish(self,result):
-        img_msg = self.cv_bridge.cv2_to_imgmsg(result)
-        img_msg.header = self.header
+    def publish(self,result,frame_id,stamp_now):
+        result = cv2.cvtColor(result,cv2.COLOR_BGR2RGB)
+        img_msg = self.cv_bridge.cv2_to_imgmsg(result,encoding="rgb8")
+        #img_msg.header = self.header
+        img_msg.header.frame_id = frame_id
+        img_msg.header.stamp = stamp_now
         self.pub.publish(img_msg)
 
     def segmant(self,img):
@@ -57,11 +61,13 @@ class Segmenter(object):
         color_seg = mmcv.imresize(color_seg, (self.width, self.height), interpolation='nearest', backend='cv2')
         self.pred = color_seg.astype(np.uint8)
         #self.pred = cv2.morphologyEx(self.pred, cv2.MORPH_OPEN, self.kernel)
-        self.publish(self.pred)
+        self.publish(self.pred, self.frame, self.stamp)
     def image_rec(self, msg1,msg2):
         self.idx = self.idx + 1
         #rospy.loginfo("Received image " + str(self.idx))
-        self.header = Header(stamp=msg2.header.stamp)
+        #self.header = Header(stamp=msg2.header.stamp)
+        self.frame = msg2.header.frame_id
+        self.stamp = msg2.header.stamp
         self.image_input = self.cv_bridge.imgmsg_to_cv2(msg1)
         self.segmant(self.image_input)
 
