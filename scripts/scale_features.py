@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import sys
 import rospy
+import cv2
 from cv_bridge import CvBridge
 from std_msgs.msg import Header
 from sensor_msgs.msg import PointCloud, CameraInfo, Image
@@ -13,14 +14,14 @@ import torch
 import message_filters
 class ToScale(object):
     def __init__(self, topic_ori_depth, topic_point_cloud,topic_odometry ,topic_scaled_depth):
-        #self.fx_real = 645.375183
-        #self.cx_real = 631.121765
-        #self.fy_real = 645.375183
-        #self.cy_real = 361.513153
-        self.fx_zed = 531.682373
-        self.cx_zed = 639.885132
-        self.fy_zed = 531.682373
-        self.cy_zed = 356.164581
+        self.fx_real = 645.375183
+        self.cx_real = 631.121765
+        self.fy_real = 645.375183
+        self.cy_real = 361.513153
+        #self.fx_zed = 531.682373
+        #self.cx_zed = 639.885132
+        #self.fy_zed = 531.682373
+        #self.cy_zed = 356.164581
         #self.fx_zed = 262.316223145
         #self.cx_zed = 318.740905762
         #self.fy_zed = 262.316223145

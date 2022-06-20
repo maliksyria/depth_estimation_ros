@@ -1,0 +1,34 @@
+<launch>
+    <arg name="input_topic" default="image_topic"/>
+    <arg name="midas_topic" default="midas_topic"/>
+    <arg name="output_topic" default="metric_leres"/>
+    <arg name="camera_info_in" default="camera_info_in"/>
+    <arg name="camera_info_out" default="camera_info"/>
+    <arg name="gt_topic" default="gt_topic"/>
+    <arg name="model_name" default="model-small-traced.pt"/>
+    <arg name="out_orig_size" default="true"/>
+    <arg name="net_width" default="256"/>
+    <arg name="net_height" default="256"/>
+    <arg name="logging" default="false"/>
+
+        <node pkg="nodelet" type="nodelet" args="manager" name="standalone_nodelet" output="screen"/>
+
+    <!-- Convert to point cloud -->
+    <node pkg="nodelet" type="nodelet" name="depth_image_proc" args="load depth_image_proc/point_cloud_xyz standalone_nodelet" output="screen">
+
+        <!-- Input: Camera calibration and metadata.  (sensor_msgs/CameraInfo) -->
+        <remap from="camera_info" to="$(arg camera_info_out)"/>
+
+
+        <!-- Input: Rectified depth image, registered to the RGB camera. (sensor_msgs/Image) -->
+        <remap from="image_rect" to="$(arg output_topic)"/>
+
+        <!-- Output: XYZ point cloud. If using PCL, subscribe as PointCloud<PointXYZ>.  (sensor_msgs/PointCloud2)  -->
+        <remap from="points" to="/point_cloud/points_dense"/>
+
+    </node>
+    
+
+    
+    
+</launch>

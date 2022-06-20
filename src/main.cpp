@@ -103,6 +103,7 @@ class Midas
     torch::NoGradGuard guard;
     at::Tensor mean, std;
     at::Tensor output, tensor;
+    std::vector<torch::jit::IValue> input_to_net;
 
 public:
     Midas()
@@ -203,8 +204,21 @@ public:
             std::cerr << " pre-processing exception: " << e.msg() << std::endl;
             return;
         }
-        
-        auto input_to_net = ToInput(tensor);                    // input to the network
+	
+	if (model_name=="model-small-traced.pt")
+{
+
+	input_to_net = ToInput(tensor); 
+
+}
+
+	else {
+	input_to_net = ToInput(tensor.to(torch::kHalf)); 
+
+}
+
+
+                             // input to the network
 
         // inference
         output;
